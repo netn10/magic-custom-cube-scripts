@@ -1,6 +1,6 @@
 import os
 import hashlib
-from tqdm import tqdm  # Import tqdm for progress bar
+from tqdm import tqdm
 
 
 def calculate_hash(file_path):
@@ -17,21 +17,21 @@ def calculate_hash(file_path):
     return hasher.hexdigest()
 
 
-def delete_duplicates(folder_path):
+def delete_duplicates(input_folder):
     """
     Delete duplicate files in the folder, ignoring numbers and underscores in filenames.
 
-    :param folder_path: Path to the folder.
+    :param input_folder: Path to the folder.
     """
-    if not os.path.exists(folder_path):
-        raise FileNotFoundError(f"The folder {folder_path} does not exist.")
+    if not os.path.exists(input_folder):
+        raise FileNotFoundError(f"The folder {input_folder} does not exist.")
 
     seen_files = {}
     supported_formats = (".png", ".jpg", ".jpeg", ".bmp", ".gif", ".tiff")
 
     # List all files that match the supported formats for tqdm progress bar
     all_files = []
-    for root, _, files in os.walk(folder_path):
+    for root, _, files in os.walk(input_folder):
         for file in files:
             if file.lower().endswith(supported_formats):
                 all_files.append(os.path.join(root, file))
@@ -58,10 +58,10 @@ def delete_duplicates(folder_path):
 
 if __name__ == "__main__":
     # Input folder containing files
-    folder_path = input("Enter the path to the folder to clean up duplicates: ")
+    input_folder = input("Enter the path to the folder to clean up duplicates: ")
 
     try:
-        delete_duplicates(folder_path)
+        delete_duplicates(input_folder)
         print("Duplicate cleanup completed.")
     except Exception as e:
         print(f"An error occurred: {e}")
